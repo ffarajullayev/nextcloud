@@ -180,7 +180,12 @@ export default {
 			if (this.isEmptyMessage) {
 				return ''
 			}
-			return this.renderContent(this.localMessage)
+			// Double-unescape potentially double-escaped localMessage
+			let message = this.localMessage
+			for (let i = 0; i < 2; i++) {
+				message = new DOMParser().parseFromString(message, 'text/html').documentElement.textContent
+			}
+			return this.renderContent(message)
 		},
 
 		isEmptyMessage() {
