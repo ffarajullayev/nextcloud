@@ -131,7 +131,7 @@ class Manager implements IManager {
 
 			$sectionID = $section->getID();
 
-			if ($sectionID !== 'connected-accounts' && isset($this->sections[$type][$sectionID])) {
+			if ($sectionID !== 'connected-accounts' && $sectionID !== 'notifications' && isset($this->sections[$type][$sectionID])) {
 				$this->log->info('', ['exception' => new \InvalidArgumentException('Section with the same ID already registered: ' . $sectionID . ', class: ' . $class)]);
 				continue;
 			}
@@ -190,7 +190,8 @@ class Manager implements IManager {
 			}
 
 			if (!$setting instanceof ISettings) {
-				$this->log->info('', ['exception' => new \InvalidArgumentException('Invalid settings setting registered (' . $class . ')')]);
+				$e = new \InvalidArgumentException('Invalid settings setting registered (' . $class . ')');
+				$this->log->info($e->getMessage(), ['exception' => $e]);
 				continue;
 			}
 
