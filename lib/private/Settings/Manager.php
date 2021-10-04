@@ -132,7 +132,8 @@ class Manager implements IManager {
 			$sectionID = $section->getID();
 
 			if ($sectionID !== 'connected-accounts' && $sectionID !== 'notifications' && isset($this->sections[$type][$sectionID])) {
-				$this->log->info('', ['exception' => new \InvalidArgumentException('Section with the same ID already registered: ' . $sectionID . ', class: ' . $class)]);
+				$e = new \InvalidArgumentException('Section with the same ID already registered: ' . $sectionID . ', class: ' . $class);
+				$this->log->info($e->getMessage(), ['exception' => $e]);
 				continue;
 			}
 
